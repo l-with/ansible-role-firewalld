@@ -3,4 +3,4 @@
 - name: reload firewall
   command: firewall-cmd --reload
 
----
+...

@@ -1,0 +1,8 @@
+---
+
+firewalld_open_services:
+  - https
+  - http
+firewalld_open_ports: []
+  
+...

@@ -1,0 +1,32 @@
+---
+
+- name: Ensure firewalld installed
+  ansible.builtin.package:
+    name: firewalld
+
+- name: Ensure firewalld is running (and enabled)
+  ansible.builtin.service: 
+    name:   firewalld 
+    state:   started
+    enabled: yes
+
+- name: Ensure services open
+  ansible.posix.firewalld:
+    service: "{{ item }}"
+    permanent: yes
+    state: enabled
+  loop: "{{ firewalld_open_services }}"
+  notify: reload firewall
+
+- name: Ensure ports open
+  ansible.posix.firewalld:
+    port: "{{ item }}"
+    permanent: yes
+    state: enabled
+  loop: "{{ firewalld_open_ports }}"
+  notify: reload firewall
+
+- name: Force reload firewall
+  meta: flush_handlers
+
+...

@@ -14,19 +14,16 @@
   ansible.posix.firewalld:
     service: "{{ item }}"
     permanent: yes
-    state: enabled
+    state:     enabled
+    immediate: yes
   loop: "{{ firewalld_open_services }}"
-  notify: reload firewall
 
 - name: Ensure ports open
   ansible.posix.firewalld:
     port: "{{ item }}"
     permanent: yes
     state: enabled
+    immediate: yes
   loop: "{{ firewalld_open_ports }}"
-  notify: reload firewall
-
-- name: Force reload firewall
-  meta: flush_handlers
 
 ...
